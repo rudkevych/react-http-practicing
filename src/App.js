@@ -6,21 +6,20 @@ import './App.css';
 function App() {
   const [movies, setMovies] = useState([]);
 
-  const fetchMoviesHandler = () => {
-    fetch('http://swapi.dev/api/films')
-      .then((response) => response.json())
-      .then((data) => {
-        const transformedMovies = data.results.map((result) => {
-          return {
-            id: result.episode_id,
-            title: result.title,
-            releaseDate: result.release_date,
-            openingText: result.opening_crawl,
-          };
-        });
-        setMovies(transformedMovies);
-      });
-  };
+  async function fetchMoviesHandler() {
+    const response = await fetch('http://swapi.dev/api/films');
+    const data = await response.json();
+    const transformedMovies = data.results.map((result) => {
+      return {
+        id: result.episode_id,
+        title: result.title,
+        releaseDate: result.release_date,
+        openingText: result.opening_crawl,
+      };
+    });
+
+    setMovies(transformedMovies);
+  }
   return (
     <React.Fragment>
       <section>
